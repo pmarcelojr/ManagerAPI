@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Manager.Core.Exceptions;
 using Manager.Domain.Validators;
 
 namespace Manager.Domain.Entities
@@ -51,7 +52,7 @@ namespace Manager.Domain.Entities
                 foreach (var error in validation.Errors)
                     _errors.Add(error.ErrorMessage);
 
-                throw new Exception("Alguns campos estão inválidos, por favor corrija-os");
+                throw new DomainException("Alguns campos estão inválidos, por favor corrija-os", _errors);
             }
 
             return true;
