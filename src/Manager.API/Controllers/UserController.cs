@@ -46,5 +46,30 @@ namespace Manager.API.Controllers
                 return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
+
+        [HttpGet]
+        [Route("/api/v1/users/get-all")]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                var allUsers = await _userService.Get();
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Usuários encontrados com sucesso!",
+                    Sucess = true,
+                    Data = allUsers
+                });
+            }
+            catch (DomainException ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());                
+            }
+        }
     }
 }
