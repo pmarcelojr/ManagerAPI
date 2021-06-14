@@ -74,6 +74,31 @@ namespace Manager.API.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("/api/v1/users/remove/{id}")]
+        public async Task<IActionResult> Remove(long id)
+        {
+            try
+            {
+                await _userService.Remove(id);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Usuário removido com sucesso!",
+                    Sucess = true,
+                    Data = null
+                });              
+            }
+            catch (DomainException ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
+        }
+
         [HttpGet]
         [Route("/api/v1/users/get-all")]
         public async Task<IActionResult> Get()
