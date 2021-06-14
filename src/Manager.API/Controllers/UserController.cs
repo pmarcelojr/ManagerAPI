@@ -141,5 +141,40 @@ namespace Manager.API.Controllers
                 return StatusCode(500, Responses.ApplicationErrorMessage());
             }
         }
+
+        [HttpGet]
+        [Route("/api/v1/users/search-by-name")]
+        public async Task<IActionResult> SearchByName([FromQuery] string name)
+        {
+            try
+            {
+                var allUsers = await _userService.SearchByName(name);
+
+                if (allUsers.Count == 0)
+                {
+                    return Ok(new ResultViewModel
+                    {
+                        Message = "Nenhum usuário foi encontrado com o nome informado",
+                        Sucess = true,
+                        Data = null
+                    });
+                }                
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Usuário encontrado com sucesso!",
+                    Sucess = true,
+                    Data = allUsers
+                });
+            }
+            catch (DomainException ex)
+            {
+                return Ok(Responses.DomainErrorMessage(ex.Message, ex.Errors));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
+        }
     }
 }
