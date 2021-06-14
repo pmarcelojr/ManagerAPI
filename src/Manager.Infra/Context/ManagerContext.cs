@@ -14,10 +14,10 @@ namespace Manager.Infra.Context
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql("server=localhost; port=3306; database=UserManagerAPI; user=root; password=1234; Persist Security Info=False; Connect Timeout=300");
-        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseMySql("server=localhost; port=3306; database=UserManagerAPI; user=root; password=1234; Persist Security Info=False; Connect Timeout=300");
+        // }
 
         public virtual DbSet<User> Users { get; set; }
 
