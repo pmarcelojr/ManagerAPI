@@ -107,6 +107,16 @@ namespace Manager.API.Controllers
             {
                 var allUsers = await _userService.Get();
 
+                if (allUsers.Count == 0)
+                {
+                    return Ok(new ResultViewModel
+                    {
+                        Message = "Nenhum usuário encontrado",
+                        Sucess = true,
+                        Data = null
+                    });
+                }
+
                 return Ok(new ResultViewModel
                 {
                     Message = "Usuários encontrados com sucesso!",
