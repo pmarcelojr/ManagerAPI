@@ -47,6 +47,33 @@ namespace Manager.API.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("/api/v1/users/update")]
+        public async Task<IActionResult> Update([FromBody] UpdateUserViewModel userViewModel)
+        {
+            try
+            {
+                var userDTO = _mapper.Map<UserDTO>(userViewModel);
+
+                var userUpdated = await _userService.Update(userDTO);
+
+                return Ok(new ResultViewModel
+                {
+                    Message = "Usuário atualizado com sucesso!",
+                    Sucess = true,
+                    Data = userUpdated
+                });              
+            }
+            catch (DomainException ex)
+            {
+                return BadRequest(Responses.DomainErrorMessage(ex.Message, ex.Errors));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
         [HttpGet]
         [Route("/api/v1/users/get-all")]
         public async Task<IActionResult> Get()

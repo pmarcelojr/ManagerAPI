@@ -44,6 +44,7 @@ namespace Manager.API
             {
                 cfg.CreateMap<User, UserDTO>().ReverseMap();
                 cfg.CreateMap<CreateUserViewModel, UserDTO>().ReverseMap();
+                cfg.CreateMap<UpdateUserViewModel, UserDTO>().ReverseMap();
             });
             services.AddSingleton(autoMapperConfig.CreateMapper());
             #endregion
